@@ -2,6 +2,18 @@ import java.util.*;
 
 public class BoundedStack<T> {
 
+    // AF
+    // elements[0..size-1] คือข้อมูลที่อยู่ใน Stack
+    // elements[size-1] คือข้อมูลบนสุดของ Stack
+
+    // RI
+    // capacity > 0
+    // 0 <= size <= capacity
+    // elements.length == capacity
+    // elements[0..size-1] != null
+    // elements[size..capacity-1] == null
+
+
     private final T[] elements; 
     private final int capacity;
     private int size; //ตัวแปรเก็บข้อมูลปัจจุบัน
@@ -31,6 +43,7 @@ public class BoundedStack<T> {
         checkRep();
     }
 
+    // producer
     public void push(T item) { //รับข้อมูล
         checkRep();
         if (item == null) {
@@ -45,6 +58,7 @@ public class BoundedStack<T> {
         checkRep();
     }
 
+    // mutator
     public T pop() { //ดึงและคืนค่าข้อมูลตัวบนสุดออก
         checkRep();
         if (isEmpty()) {
@@ -70,6 +84,7 @@ public class BoundedStack<T> {
         return copy;
     }
 
+    // observer
     public T peek() { //อ่านค่าข้อมูลตัวบนสุดแบบไม่ลบออก
         checkRep();
         if (isEmpty()) {

@@ -24,17 +24,39 @@ public class BoundedStackTest {
         assert assertsOn = true; // ใช้ตรวจสอบวาสเปิด Assertion หรือไม่
         if (!assertsOn) { //กรณีถ้ายังไม่เปิด Assertion
             System.out.println("WARNING: assertions disabled"
-                    + " - re-run with: java -ea PlaylistTest\n"); 
+                    + " - re-run with: java -ea BoundedStackTest\n"); 
         } //เพื่อบอกให้เปิด Assertion
 
         System.out.println("=== Playlist Test Suite ===\n");
 
-        testCreators(); //เรียกเมธอดทดสอบสร้าง Playlist
-        testAdd(); // ทดสอบการเพิ่มเพลง
-        testRemove(); // ทดสอบการลบเพลง
-        testObservers(); //ทดสอบว่ามีการแจ้งเตือนเมื่อ Playlist หรือไม่
-        testProducer(); // ทดสอบProducer หรือส่วนสร้างข้อมูล
-        testExposure(); //ตรวจสอบว่าไม่ได้คืนค่าตัวแปรภายในออกไปจนถูกแก้ไขได้
+        // test case อันนี้เป็นเคสตัวอย่าง
+
+        BoundedStack<String> stack = new BoundedStack<>(3);
+
+// Test 1
+check("New stack should be empty", stack.isEmpty());
+
+// Test 2
+check("New stack size should be 0", stack.size() == 0);
+
+// Test 3
+check("Capacity should be 3", stack.capacity() == 3);
+
+// Test 4
+stack.push("Alice");
+check("Size should be 1 after push", stack.size() == 1);
+
+// Test 5
+check("Peek should return Alice", stack.peek().equals("Alice"));
+
+// Test 6
+stack.push("Bob"); // เอา Bob เข้า stack แล้วก็หลังจาก push ต้องเพิ่มจำนวนไซร์ จาก1เป็น2
+check("Size should be 2 after push", stack.size() == 2);
+
+// Test 7 // peek คืนค่าข้อมูลบนสุด บนสุดคือ Bob
+check("Peek should return Bob", stack.peek().equals("Bob"));
+
+// Test 8
 
         System.out.println("\n=== Summary ==="); 
         System.out.println("Passed: " + passed); //แสดงจำนวน test ที่ผ่าน
