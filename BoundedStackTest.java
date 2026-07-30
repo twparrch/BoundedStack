@@ -86,6 +86,50 @@ stack.pop();
 stack.pop();
 check("Stack should be empty after removing all elements", stack.isEmpty());
 
+// Test 16 Stack ว่างละตอนนี้ ถ้าเรียก pop() อีกต้องเป็น IllegalStateException 
+boolean popException = false;
+try {
+    stack.pop();
+} catch (IllegalStateException e) {
+    popException = true;
+}
+check("Pop on empty stack should throw exception", popException);
+
+// Test 17 ทดสอบว่า peek() บน Stack ว่าง ต้องเกิด IllegalStateException
+boolean peekException = false;
+try {
+    stack.peek();
+} catch (IllegalStateException e) {
+    peekException = true;
+}
+check("Peek on empty stack should throw exception", peekException);
+
+// Test 18 เพราะใน push() มี item == null พอเป็น  null ต้องเป็น IllegalArgumentException
+boolean nullException = false;
+try {
+    stack.push(null);
+} catch (IllegalArgumentException e) {
+    nullException = true;
+}
+check("Push null should throw exception", nullException);
+
+// Test 19 ก็คือความจุคือ 3 เลยแทน A,B,C ให้เต็ม และพอใส่่ D อีกก็จะเกิด IllegalStateException
+stack.push("A");
+stack.push("B");
+stack.push("C");
+boolean fullException = false;
+try {
+    stack.push("D");
+} catch (IllegalStateException e) {
+    fullException = true;
+}
+check("Push on full stack should throw exception", fullException);
+
+// Test 20 Push ไม่สำเร็จ ขนาดของ Stack ต้องเป็น 3 เท่าเดิมไม่เปลี่ยน
+check("Size should remain 3 after failed push", stack.size() == 3);
+
+
+
         System.out.println("\n=== Summary ==="); 
         System.out.println("Passed: " + passed); //แสดงจำนวน test ที่ผ่าน
         System.out.println("Failed: " + failed); //แสดงจำนวน test ที่ไม่ผ่าน
