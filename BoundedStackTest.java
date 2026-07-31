@@ -128,7 +128,29 @@ check("Push on full stack should throw exception", fullException);
 // Test 20 Push ไม่สำเร็จ ขนาดของ Stack ต้องเป็น 3 เท่าเดิมไม่เปลี่ยน
 check("Size should remain 3 after failed push", stack.size() == 3);
 
+// Test 21 เมื่อ pop ออกแล้วต้อง pust ข้อมูลใหม่เข้าไปได้ปกติ
+stack.pop();
+stack.push("NewData");
+check("Should be able to pust new item after pop", stack.size() == 3 && stack.peek().equals("NewData"));
 
+// Test 22 ทดสอบลำดับ lifoS เข้าทีหลังต้องออกก่อน
+BoundedStack<Integer> lifoS = new BoundedStack<>(2);
+lifoS.push(10);
+lifoS.push(20);
+check("Pop should return last pushed element first (LIFO)", lifoS.pop() == 20 && lifoS.pop() == 10);
+
+// Test 23 ต้องคืนค่าความจุสูงสุดความความจริงเสมอ ไม่ว่าข้อมูลจะมีกี่ตัว
+BoundedStack<Integer> capStack = new BoundedStack<>(10);
+capStack.push(1);
+check("Capacity should remain constant regardless of size",capStack.capacity() == 10 && capStack.size() == 1);
+
+// Test 24 แก้ไขข้อมูลใน stack ที่คัดลอกมา ต้องไม่กระทบกับ stack ต้นฉบับ
+BoundedStack<String> copyS = stack.duplicate();
+copyS.pop();
+check("Modifying duplicate stack should not affect original stack", stack.size() == 3 && copyS.size() == 2);
+
+// Test 25 stack ที่ใส่ข้อมูลจนเต็มแล้ว เมื่อเช็ค isEmpty ต้องได้ false
+check("Full stack shoul not empty", !stack.isEmpty());
 
         System.out.println("\n=== Summary ==="); 
         System.out.println("Passed: " + passed); //แสดงจำนวน test ที่ผ่าน
